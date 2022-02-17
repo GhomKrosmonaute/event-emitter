@@ -1,0 +1,3 @@
+# TS-only Hard Typed EventEmitter
+
+Width Node EventEmitter methods: on, once, off...

@@ -1,0 +1,19 @@
+{
+  "name": "@ghom/event-emitter",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "description": "TypeScript only package for entity based app using p5",
+  "prettier": {
+    "semi": false
+  },
+  "scripts": {
+    "format": "prettier --write src tsconfig.*",
+    "test": "tsc --noEmit",
+    "prepublishOnly": "npm run format && npm test"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.5"
+  }
+}
