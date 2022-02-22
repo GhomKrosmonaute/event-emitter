@@ -1,19 +1,21 @@
 {
   "name": "@ghom/event-emitter",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
-  "description": "TypeScript only package for emit events (Node EventEmitter-like)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "description": "Suitable to be included in a bundle for Node and the browser for emit events (Node EventEmitter-like)",
   "prettier": {
     "semi": false
   },
   "scripts": {
     "format": "prettier --write src tsconfig.*",
-    "test": "tsc --noEmit",
+    "build": "tsc",
+    "test": "npm run build && jest test.js",
     "prepublishOnly": "npm run format && npm test"
   },
   "devDependencies": {
+    "jest": "^27.5.1",
     "prettier": "^2.5.1",
     "typescript": "^4.5.5"
   }
