@@ -1,4 +1,4 @@
-export type BaseEventNames = Record<string, { context: any; params: any[] }>
+export type BaseEventNames = Record<string, any[]>
 
 export type Listener<
   EventNames extends BaseEventNames,
@@ -12,13 +12,10 @@ export type Listener<
 export type ListenerFunction<
   EventNames extends BaseEventNames,
   Name extends keyof EventNames
-> = (
-  this: EventNames[Name]["context"],
-  ...params: EventNames[Name]["params"]
-) => unknown
+> = (...params: EventNames[Name]) => unknown
 
 export class EventEmitter<EventNames extends BaseEventNames = BaseEventNames> {
-  protected _listeners: Listener<EventNames, keyof EventNames>[] = []
+  protected _listeners: Listener<EventNames, any>[] = []
 
   public on<Name extends keyof EventNames>(
     name: Name,
@@ -44,14 +41,13 @@ export class EventEmitter<EventNames extends BaseEventNames = BaseEventNames> {
     else this._listeners.splice(0, this._listeners.length)
   }
 
-  public emit<Name extends keyof EventNames>(
+  public async emit<Name extends keyof EventNames>(
     name: Name,
-    params: EventNames[Name]["params"],
-    context: EventNames[Name]["context"]
+    ...params: EventNames[Name]
   ) {
     for (const listener of this._listeners) {
       if (listener.name === name) {
-        listener.run.bind(context)(...params)
+        await listener.run(...params)
 
         if (listener.once) {
           const index = this._listeners.indexOf(listener)
@@ -59,15 +55,5 @@ export class EventEmitter<EventNames extends BaseEventNames = BaseEventNames> {
         }
       }
     }
-  }
-
-  public getListenersByName<Name extends keyof EventNames>(
-    name: Name
-  ): Listener<EventNames, Name>[] {
-    return this._listeners.filter(
-      (listener): listener is Listener<EventNames, Name> => {
-        return listener.name === name
-      }
-    )
   }
 }
