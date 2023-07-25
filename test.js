@@ -1,9 +1,10 @@
+const { test, expect } = require("@jest/globals")
 const { EventEmitter } = require("./dist/index")
 
 const emitter = new EventEmitter()
 
 test("listen", async () => {
-  emitter.on("listen",  (n) => {
+  emitter.on("listen", (n) => {
     expect(n).toBeGreaterThanOrEqual(1)
     expect(n).toBeLessThanOrEqual(2)
   })
@@ -28,4 +29,3 @@ test("cleaning", () => {
 
   expect(emitter._listeners.length).toBe(0)
 })
-
