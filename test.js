@@ -22,6 +22,19 @@ test("listen once", async () => {
   await emitter.emit("listen once", 2)
 })
 
+test("listen once twice", async () => {
+  let calledAmount = 0
+  emitter.once("listen once twice", () => {
+    calledAmount++
+  })
+  emitter.once("listen once twice", () => {
+    calledAmount++
+  })
+
+  await emitter.emit("listen once twice")
+  expect(calledAmount).toBe(2)
+})
+
 test("cleaning", () => {
   emitter.on("cleaning", () => null)
 
