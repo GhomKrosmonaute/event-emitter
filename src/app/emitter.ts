@@ -45,15 +45,19 @@ export class EventEmitter<EventNames extends BaseEventNames = BaseEventNames> {
     name: Name,
     ...params: EventNames[Name]
   ) {
+    const toRemove: Listener<EventNames, Name>[] = []
     for (const listener of this._listeners) {
       if (listener.name === name) {
         listener.run(...params)
 
         if (listener.once) {
-          const index = this._listeners.indexOf(listener)
-          this._listeners.splice(index, 1)
+          toRemove.push(listener)
         }
       }
     }
+    toRemove.forEach((listener) => {
+      const index = this._listeners.indexOf(listener)
+      this._listeners.splice(index, 1)
+    })
   }
 }
