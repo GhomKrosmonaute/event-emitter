@@ -1,4 +1,4 @@
-# Hard Typed EventEmitter
+# Simple Typed EventEmitter
 
-Width Node EventEmitter methods: on, once, off and emit.
+Includes Node-like EventEmitter methods: on, once, off and emit.
 Compatible with Bun, Deno, Node, and the browser.
